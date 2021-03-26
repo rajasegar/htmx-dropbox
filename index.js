@@ -131,7 +131,7 @@ app.post('/update/:id', (req, res) => {
   console.log(req.body);
   const item = boxData.find(b => b.id === id);
   console.log(item);
-  item.name = name;
+  item.name = name.slice(0, 30);
 
   const template = pug.compileFile('views/_list-view.pug');
   const markup = template({ boxData });
