@@ -1,0 +1,6 @@
+include mixins
+.col.name.folder-name(id='item-' + item.id, hx-swap-oob="true")
+  form(hx-post="/update/" + item.id, hx-target="#dropbox-list")
+    input(type="text", name="name", value=item.name, autofocus=true)
+button.btn.btn-light.ms-2(disabled=true)
+  +icon-check()

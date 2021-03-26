@@ -1,25 +1,37 @@
 include mixins
-li.list-group-item.parent-folder-item(id='' ) &nbsp;
-each item in boxData
-  li.list-item.folder-list-item.list-group-item.folder-item(
-    draggable='true', 
-    class={'list-group-item-primary': item.new === true} 
-    _=item.new === true ? 'on load wait 2s then remove .list-group-item-primary' : ''
-    )
-    .row
-      .col-auto.select
-        i.far.fa-square(style='line-height: 30px')
-      .col-auto.icon
-        if item.type === 'folder'
-          +icon-folder()
-        else
-          +icon-file()
-      .col.name.folder-name
-        a(href='/folders/192347') #{item.name}
-      .col.d-none.d-sm-block.text-muted.date
-        div 2021-03-26T04:03:35Z
-      .col-auto.actions
-        button.btn.btn-light.ms-2(hx-delete="/?name=" + item.name, hx-target="#dropbox-list")
-          +icon-trash()
-        button.btn.btn-light.ms-2()
-          +icon-edit()
+include _level-up
+if boxData.length > 0
+  each item in boxData
+    li.list-item.folder-list-item.list-group-item.folder-item(
+      draggable='true', 
+      class={'list-group-item-primary': item.new === true} 
+      _=item.new === true ? 'on load wait 2s then remove .list-group-item-primary' : ''
+      )
+      .row
+        .col-auto.select
+          i.far.fa-square(style='line-height: 30px')
+        .col-auto.icon
+          if item.type === 'folder'
+            +icon-folder()
+          else
+            +icon-file()
+        .col.name.folder-name(id='item-' + item.id)
+          if item.type === 'folder'
+            a(href='/folders/' + item.id) #{item.name}
+          else
+            a(href='/files/' + item.id) #{item.name}
+        .col.d-none.d-sm-block.text-muted.date
+          div 2021-03-26T04:03:35Z
+        .col-auto.actions
+          button.btn.btn-light.ms-2(hx-delete="/?name=" + item.name, hx-target="#dropbox-list")
+            +icon-trash()
+          button.btn.btn-light.ms-2(hx-get="/edit?id=" + item.id, hx-swap="outerHTML")
+            +icon-edit()
+else
+  .jumbotron.jumbotron-fluid.mt-4
+    .text-center.text-muted
+      +icon-folder-open(width="48", height="48")
+      br
+      br
+      p.lead This folder is empty
+

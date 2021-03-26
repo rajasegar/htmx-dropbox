@@ -1,0 +1,82 @@
+include mixins
+doctype html
+html(lang="en")
+  head
+    title htmbox - A Dropbox clone in htmx
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous")
+    link(href="/styles.css", rel="stylesheet")
+  body
+    #app.container
+      br
+      nav.navbar.navbar-light.bg-light
+        a.col-auto.p-0(href='/')
+          img(height='50px' src='/images/logo.png')
+      br
+      nav(aria-label='breadcrumb')
+        ol.breadcrumb.bg-light
+          li.breadcrumb-item
+            a(href='/') Home
+          li.breadcrumb-item.active(aria-current="page") #{currentFolder.name}
+      br
+      #folder.mb-5()
+        .mb-5.d-flex.justify-content-between
+          div
+            .dropdown
+              button#dropdownMenuButton1.btn.btn-primary.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                | Create
+              ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
+                li
+                  button.dropdown-item(type="button", hx-get="/new-folder", hx-target="#dropbox-list")
+                    +icon-new-folder()
+                    span.align-middle   Create Folder
+                li
+                  button.dropdown-item(type="button", hx-get="/new-file", hx-target="#dropbox-list")
+                    +icon-new-file()
+                    span.align-middle   Create Document
+
+          div
+            #layout-switch.text-right(data-reflex-root='#layout-switch,#folder')
+              .btn-group(role='group' aria-label='Basic example')
+                - var setActiveLayout = "on htmx:afterOnLoad remove .btn-primary from .btn-layout add .btn-outline-primary to .btn-layout remove .btn-outline-primary add .btn-primary"
+                button.btn.btn-layout.btn-primary(
+                  type='button' 
+                  hx-get="/list-view?id=" + currentFolder.id 
+                  hx-target="#dropbox-list"
+                  _=setActiveLayout)
+                  +icon-list()
+                button.btn.btn-outline-primary.btn-layout(
+                  type='button' 
+                  hx-get="/grid-small?id=" + currentFolder.id 
+                  hx-target="#dropbox-list"
+                  _=setActiveLayout)
+                  +icon-grid-small()
+                button.btn.btn-outline-primary.btn-layout(
+                  type='button' 
+                  hx-get="/grid-view?id=" + currentFolder.id 
+                  hx-target="#dropbox-list"
+                  _=setActiveLayout)
+                  +icon-grid()
+        ul#dropbox-list.list.list-group
+          include _list-view
+    footer.footer.mt-3.p-3.bg-primary
+      .row.text-light
+        .col-md-4.col-6.text-md-left.text-center
+          small
+            span This is an
+            a.fw-bold.ms-2(href='https://htmx.org' target='_blank') htmx
+            span  demo
+        .col-md-4.col-6.text-center
+          small
+            a.text-light(href='https://github.com/rajasegar/htmx-dropbox' target='_blank')
+              span.align-bottom
+                i.fab.fa-github
+                |  Check out the repo
+        .col-md-4.d-none.d-md-block.text-right
+          small
+            a.text-light(href='https://github.com/rajasegar' target='_blank')
+              span.align-bottom @rajasegar
+
+
+    script(src="https://unpkg.com/htmx.org@1.3.1")
+    script(src="https://unpkg.com/hyperscript.org@0.0.8")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous")
