@@ -20,16 +20,19 @@ html(lang="en")
       #folder(data-controller='folders' data-reflex-root='#folder')
         .mb-5.d-flex.justify-content-between
           div
-            .btn-toolbar(role='toolbar' )
-              .dropdown.btn-group.mr-2(role='group')
-                button#dropdownMenuButton.btn.btn-primary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Create
-                .dropdown-menu(aria-labelledby='dropdownMenuButton')
-                  a.dropdown-item(data-folder-id='' data-reflex-root='#folder' data-reflex='click->FolderReflex#sample')
-                    i.fa.fa-folder-plus
-                    |  Create Folder
-                  a.dropdown-item(data-folder-id='' data-reflex-root='#folder' data-reflex='click->DocumentReflex#sample')
-                    i.fa.fa-file-medical
-                    |  Create Document
+            .dropdown
+              button#dropdownMenuButton1.btn.btn-primary.dropdown-toggle(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+                | Create
+              ul.dropdown-menu(aria-labelledby='dropdownMenuButton1')
+                li
+                  a.dropdown-item(href='#') 
+                    +icon-new-folder()
+                    span.align-middle   Create Folder
+                li
+                  a.dropdown-item(href='#') 
+                    +icon-new-file()
+                    span.align-middle   Create Document
+
           div
             #layout-switch.text-right(data-reflex-root='#layout-switch,#folder')
               .btn-group(role='group' aria-label='Basic example')
