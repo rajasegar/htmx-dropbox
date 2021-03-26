@@ -4,7 +4,7 @@ include _level-up
   each item in boxData
     .grid-item.folder-item.folder-grid-item.col-12.col-sm-6.col-md-4.mt-4.text-center
       a(href='/folders/192373')
-        #folder_192373.p-4.card.folder-item(draggable='true' data-folder-id='192373' data-reflex-root='#folder' data-action='\ ')
+        #folder_192373.p-4.card.folder-item(draggable='true' )
           if item.type === 'folder'
             +icon-folder(width="48",height="48", style="margin:0 auto;")
           else

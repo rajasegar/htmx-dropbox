@@ -25,7 +25,7 @@ block body
                 span.align-middle   Create Document
 
       div
-        #layout-switch.text-right(data-reflex-root='#layout-switch,#folder')
+        #layout-switch.text-right()
           .btn-group(role='group' aria-label='Basic example')
             - var setActiveLayout = "on htmx:afterOnLoad remove .btn-primary from .btn-layout add .btn-outline-primary to .btn-layout remove .btn-outline-primary add .btn-primary"
             button.btn.btn-layout.btn-primary(
