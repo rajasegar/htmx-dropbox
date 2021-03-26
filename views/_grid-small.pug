@@ -1,0 +1,14 @@
+include mixins
+li.list-group-item.parent-folder-item(id='' ) &nbsp;
+.grid.row
+  each item in boxData
+    .grid-item.folder-item.folder-grid-item.col-6.col-sm-4.col-md-3.col-lg-2.mt-4.text-center
+      a(href='/folders/192373')
+        #folder_192373.p-4.card.folder-item(draggable='true' data-folder-id='192373' data-reflex-root='#folder' data-action='\ ')
+          if item.type === 'folder'
+            +icon-folder(width="48",height="48", style="margin:0 auto;")
+          else
+            +icon-file(width="48", height="48", style="margin:0 auto;")
+          br
+          .name.folder-name
+            | #{item.name}

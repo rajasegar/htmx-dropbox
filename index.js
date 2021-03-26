@@ -58,6 +58,68 @@ app.get('/', (req, res) => {
   res.render('index', { boxData });
 });
 
+app.get('/list-view', (req, res) => {
+  const template = pug.compileFile('views/_list-view.pug');
+  const markup = template({ boxData });
+  res.send(markup);
+});
+
+app.get('/grid-small', (req, res) => {
+  const template = pug.compileFile('views/_grid-small.pug');
+  const markup = template({ boxData });
+  res.send(markup);
+});
+
+app.get('/grid-view', (req, res) => {
+  const template = pug.compileFile('views/_grid-view.pug');
+  const markup = template({ boxData });
+  res.send(markup);
+});
+
+function clearNewFlags() {
+  setTimeout(() => {
+    boxData.forEach(b => { 
+      if(b.new) b.new = false
+    })
+  }, 2000);
+}
+
+app.get('/new-folder', (req, res) => {
+  boxData.unshift({
+    name: 'New Folder',
+    type: 'folder',
+    new: true
+  });
+
+  const template = pug.compileFile('views/_list-view.pug');
+  const markup = template({ boxData });
+  res.send(markup);
+  clearNewFlags();
+});
+
+app.get('/new-file', (req, res) => {
+  boxData.unshift({
+    name: 'New File',
+    type: 'file',
+    new: true
+  });
+
+  const template = pug.compileFile('views/_list-view.pug');
+  const markup = template({ boxData });
+  res.send(markup);
+  clearNewFlags();
+
+
+});
+
+app.delete('/', (req, res) => {
+  const { name } = req.query;
+  boxData.splice(boxData.findIndex(d => d.name === name), 1);
+  const template = pug.compileFile('views/_list-view.pug');
+  const markup = template({ boxData });
+  res.send(markup);
+});
+
 app.listen(PORT);
 
 console.log('Listening on port: ', PORT);
