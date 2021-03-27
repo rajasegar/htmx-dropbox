@@ -3,16 +3,27 @@ const pug = require('pug');
 const bodyParser = require('body-parser');
 const { v4 : uuid } = require('uuid');
 const boxData = require('./boxData');
+const rateLimit = require('express-rate-limit');
 
 
 const PORT = process.env.PORT || 3000;
 const app = express();
+
+const apiLimiter = rateLimit({
+  windowMs: 15*60*1000, // 15 mins
+  max: 100
+});
+
 
 
 app.set('view engine', 'pug');
 app.use(express.static('assets'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// Rate limiting new file and folder apis
+app.use('/new-file', apiLimiter);
+app.use('/new-folder', apiLimiter);
 
 app.get('/', (req, res) => {
   res.render('index', { boxData });
