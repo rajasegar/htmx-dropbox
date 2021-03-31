@@ -16,6 +16,8 @@ npm start
 
 You can view the app in action at `http://localhost:3000`
 
+![htmbox demo gif](htmbox.gif)
+
 
 ## Note
 There files and folders are not persisted anywhere.
